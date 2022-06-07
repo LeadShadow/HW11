@@ -47,7 +47,7 @@ class Birthday(Field):
 
 
 class Record:
-    def __init__(self, birthday: Birthday, name: Name, phons: List[Phone] = []) -> None:
+    def __init__(self, name: Name, birthday: Birthday = None, phons: List[Phone] = []) -> None:
         self.name = name
         self.birthday = birthday
         self.phones = phons
@@ -63,7 +63,7 @@ class Record:
                 return self.phones.pop(i)
 
     def __repr__(self) -> str:
-        if self.birthday.value is None:
+        if self.birthday is None:
             return f"{self.name.value.title()}:{[p.value for p in self.phones]}"
         else:
             return f"{self.name.value.title()}:{[p.value for p in self.phones]}, birtdate: {self.birthday.value}"
@@ -150,7 +150,7 @@ def input_add(*args):
         birthday = Birthday(args[2])
     except IndexError:
         birthday = None
-    rec = Record(birthday, name, phons=[phone])
+    rec = Record(name=name, phons=[phone], birthday=birthday)
     ab.add_record(rec)
     return f"Contact {rec.name.value.title()} add successful"
 
